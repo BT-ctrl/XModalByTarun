@@ -43,39 +43,40 @@ function App() {
     e.preventDefault();
     const { username, email, phone, dob } = formData;
 
+    // If no fields filled at all
+    if (!username && !email && !phone && !dob) {
+      alert('Please fill out the Username field.');
+      return;
+    }
+
+    // Validate username if it is filled (or required for all?)
     if (!username) {
       alert('Please fill out the Username field.');
       return;
     }
-    if (!email) {
-      alert('Please fill out the Email field.');
-      return;
-    }
-    if (!phone) {
-      alert('Please fill out the Phone field.');
-      return;
-    }
-    if (!dob) {
-      alert('Please fill out the Date of Birth field.');
-      return;
-    }
 
-    if (!email.includes('@')) {
+    // Validate email only if present
+    if (email && !email.includes('@')) {
       alert('Invalid email. Please check your email address.');
       return;
     }
 
-    if (!/^\d{10}$/.test(phone)) {
+    // Validate phone only if present
+    if (phone && !/^\d{10}$/.test(phone)) {
       alert('Invalid phone number. Please enter a 10-digit phone number.');
       return;
     }
 
-    const today = new Date().toISOString().split('T')[0];
-    if (dob > today) {
-      alert('Invalid date of birth. Date of birth cannot be in the future.');
-      return;
+    // Validate dob only if present
+    if (dob) {
+      const today = new Date().toISOString().split('T')[0];
+      if (dob > today) {
+        alert('Invalid date of birth. Date of birth cannot be in the future.');
+        return;
+      }
     }
 
+    // If all validations pass:
     closeModal();
   };
 
