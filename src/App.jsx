@@ -43,31 +43,26 @@ function App() {
     e.preventDefault();
     const { username, email, phone, dob } = formData;
 
-    // If no fields filled at all
-    if (!username && !email && !phone && !dob) {
+    if (
+      !username.trim() &&
+      !email.trim() &&
+      !phone.trim() &&
+      !dob.trim()
+    ) {
       alert('Please fill out the Username field.');
       return;
     }
 
-    // Validate username if it is filled (or required for all?)
-    if (!username) {
-      alert('Please fill out the Username field.');
-      return;
-    }
-
-    // Validate email only if present
     if (email && !email.includes('@')) {
       alert('Invalid email. Please check your email address.');
       return;
     }
 
-    // Validate phone only if present
     if (phone && !/^\d{10}$/.test(phone)) {
       alert('Invalid phone number. Please enter a 10-digit phone number.');
       return;
     }
 
-    // Validate dob only if present
     if (dob) {
       const today = new Date().toISOString().split('T')[0];
       if (dob > today) {
@@ -76,7 +71,11 @@ function App() {
       }
     }
 
-    // If all validations pass:
+    if (!username.trim()) {
+      alert('Please fill out the Username field.');
+      return;
+    }
+
     closeModal();
   };
 
